@@ -21,6 +21,8 @@
   "homepage": "https://github.com/solotraze/quotr#readme",
   "dependencies": {
     "chai": "^3.5.0",
-    "mocha": "^2.5.3"
+    "cheerio": "^0.20.0",
+    "mocha": "^2.5.3",
+    "request": "^2.72.0"
   }
 }

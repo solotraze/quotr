@@ -2,7 +2,7 @@ var assert = require('chai').assert;
 var quotr = require('../quotr/quotr');
 
 /* Configure test env */
-var webTestTimeout = 5000; // Seconds for test timeout if a web request is involved
+var webTestTimeout = 10000; // Seconds for test timeout if a web request is involved
 /* Test Data */
 var stockCode = 'ALLBAN';
 
@@ -21,10 +21,16 @@ describe('quotr.js', function(){
       this.timeout(webTestTimeout);
       quotr.getQuote(stockCode, function(err, data) {
         if(err) { done(err); return; }
+
+        console.log('-----\nQuote data = \n' + JSON.stringify(data, null, 2));;
+
         assert.isNotNull(data.nse, 'NSE data empty');
         assert.isNumber(data.nse.lastTradedPrice, 'NSE data invalid');
         assert.isNotNull(data.bse, 'BSE data empty');
         assert.isNumber(data.bse.lastTradedPrice, 'BSE data invalid');
+        assert.isNotNull(data.nifty, 'NIFTY value empty');
+        assert.isNumber(data.nifty, 'NIFTY value invalid');
+
         done(); // Mark test complete
       });
     });
