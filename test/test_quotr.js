@@ -30,6 +30,8 @@ describe('quotr.js', function(){
         assert.isNumber(data.bse.lastTradedPrice, 'BSE data invalid');
         assert.isNotNull(data.nifty, 'NIFTY value empty');
         assert.isNumber(data.nifty, 'NIFTY value invalid');
+        assert.isNotNull(data.sensex, 'SENSEX value empty');
+        assert.isNumber(data.sensex, 'SENSEX value empty');
 
         done(); // Mark test complete
       });
