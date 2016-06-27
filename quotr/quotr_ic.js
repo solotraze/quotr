@@ -3,7 +3,7 @@ var cheerio = require('cheerio');
 var quoteUrl = 'http://getquote.icicidirect.com/trading_stock_quote.aspx?symbol='
 
 var processAttribute = function ($, caption) {
-  // TODO: contains not correct. use something ==
+  // TODO: contains seems not correct. use something ==
   var nseElement = $("td:contains("+caption+")").next();
   var nseVal = parseFloat(nseElement.text().trim());
   var bseVal = parseFloat(nseElement.next().text().trim());
@@ -43,6 +43,15 @@ var parseResponse = function (html) {
     quoteObj.nse[attribute.key] = valObj.nseVal;
     quoteObj.bse[attribute.key] = valObj.bseVal;
   });
+
+  var niftyCell = $("a:contains('NIFTY')");
+  var sensexCell = $("a:contains('SENSEX')");
+  var niftyCellText = niftyCell.parent().text();
+  var sensexCellText = sensexCell.parent().text();
+  quoteObj.nifty = parseFloat(niftyCellText.split('\r\n')[1].replace(/[\t(),]/g,''));
+  quoteObj.niftyChange = parseFloat(niftyCell.next().text().replace(/[\t(),\r\n]/g,''));
+  quoteObj.sensex = parseFloat(sensexCellText.split('\r\n')[1].replace(/[\t(),]/g,''));
+  quoteObj.sensexChange = parseFloat(sensexCell.next().text().replace(/[\t(),\r\n]/g,''));
 
   return quoteObj;
 };
